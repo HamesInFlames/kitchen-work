@@ -1,0 +1,157 @@
+@import 'tailwindcss';
+
+/*
+  Tova's Bakery recipe book — design tokens.
+
+  Dark-first by deliberate choice: the research is unambiguous that a focused,
+  high-contrast, screen-stays-awake cooking view is the single feature that wins
+  in a real (floury, low-light, late-night) bakery kitchen. Warm bakery palette
+  (espresso / honey-gold / cream) — this is the internal kitchen tool's own look,
+  NOT Kim Consultant's house brand and NOT Tova's marketing site.
+
+  Wet/dry colour-coding pairs a WARM tint (wet) and a COOL tint (dry) with a
+  redundant icon + text label everywhere, so colour is never the only signal
+  (WCAG 1.4.1, Level A).
+*/
+@theme {
+  /* Surfaces & ink */
+  --color-bg: #1a120b;
+  --color-surface: #241910;
+  --color-surface-2: #2f2114;
+  --color-surface-3: #3a2a1a;
+  --color-line: #3d2c1c;
+  --color-line-soft: #2c2014;
+
+  --color-ink: #f4ecdc;
+  --color-ink-soft: #cdba9d;
+  --color-ink-faint: #957d5f;
+
+  /* Bakery gold accents */
+  --color-gold: #e3c766;
+  --color-gold-deep: #c9a227;
+
+  /* Wet = warm; Dry = cool. Each used as tint bg + accent + line. */
+  --color-wet: #f1a868;
+  --color-wet-bg: #3a2414;
+  --color-wet-line: #7c4c24;
+  --color-dry: #93c7c1;
+  --color-dry-bg: #16292a;
+  --color-dry-line: #2d5450;
+
+  /* Status */
+  --color-danger: #ec7d63;
+  --color-ok: #82c490;
+  --color-warn: #e6c15c;
+
+  /* Type */
+  --font-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    /* Adjustable text size: this is changed at runtime (Settings → Text size).
+       All sizing is rem-based, so this scales the whole UI. */
+    font-size: 16px;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Prevent iOS text auto-zoom shifting the layout in bake mode. */
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+
+  /* Recipe titles & section headers read like a recipe book. */
+  h1,
+  h2,
+  .font-recipe {
+    font-family: var(--font-serif);
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* Visible focus for keyboard users (kitchen tablets often have BT keyboards).
+     Uses box-shadow so the ring survives Tailwind's focus:outline-none on inputs. */
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-bg),
+      0 0 0 4px var(--color-gold);
+    border-radius: 6px;
+  }
+
+  /* Honour reduced-motion: kill non-essential animation. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Safe-area aware paddings for installed full-screen PWAs. */
+  .pt-safe {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+  .pb-safe {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+  .px-safe {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  .min-tap {
+    min-height: 56px;
+    min-width: 56px;
+  }
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Clamp long notes/text to N lines. */
+  .clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Hide scrollbars on horizontal chip rows while keeping scroll. */
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}

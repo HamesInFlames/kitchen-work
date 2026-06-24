@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tova's Bakery recipe book">
+  <rect width="64" height="64" rx="13" fill="#1a120b"/>
+  <g>
+    <circle cx="32" cy="32" r="18" fill="#E3C766"/>
+    <circle cx="32" cy="32" r="18" fill="url(#g)"/>
+    <g stroke="#1a120b" stroke-width="2.6" stroke-linecap="round">
+      <line x1="22" y1="38" x2="30" y2="22"/>
+      <line x1="28" y1="42" x2="36" y2="26"/>
+      <line x1="34" y1="44" x2="42" y2="28"/>
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E3C766" stop-opacity="0"/>
+      <stop offset="1" stop-color="#C9A227" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+</svg>
